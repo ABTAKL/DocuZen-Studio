@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocuZen Studio V6 - ATLabs India</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- PDF & Office Libraries via CDN -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/libs/pptxgen.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+    <!-- Google Adsense Script loader -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8514479683501725" crossorigin="anonymous"></script>
+
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.5); border-radius: 3px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.8); }
+        
+        .adsbygoogle-container {
+            min-width: 200px;
+            min-height: 90px;
+            display: block;
+        }
+    </style>
+</head>
+<body class="h-full bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-4 sm:px-6 py-3 flex items-center justify-between shrink-0 shadow-sm z-30">
+        <div class="flex items-center space-x-3">
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobile-menu-toggle" class="md:hidden p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-md shrink-0">
+                <i data-lucide="layers" class="w-6 h-6"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-base sm:text-lg tracking-tight bg-gradient-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">DocuZen Studio</h1>
+                <p class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 font-medium">100% Client-Side • Secure Offline Document Suite</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3">
+            <span class="hidden sm:inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-50 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5 animate-pulse"></span>
+                Secure & Local
+            </span>
+            <button id="theme-toggle" class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition-colors" title="Toggle Theme">
+                <i data-lucide="sun" class="w-5 h-5 hidden dark:block"></i>
+                <i data-lucide="moon" class="w-5 h-5 block dark:hidden"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace Layout -->
+    <div class="flex-1 flex overflow-hidden relative">
+        
+        <!-- Mobile Sidebar Backdrop Overlay -->
+        <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/50 z-20 hidden md:hidden"></div>
+
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar" class="absolute md:relative inset-y-0 left-0 w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col shrink-0 select-none z-30 transform -translate-x-full md:translate-x-0 transition-transform duration-200">
+            <div class="p-4 border-b border-slate-100 dark:border-slate-700/50 flex items-center justify-between shrink-0">
+                <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Tools Menu</span>
+                <button id="sidebar-close" class="md:hidden text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            
+            <!-- Scrollable Menu Section -->
+            <nav class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-1.5">
+                <button onclick="switchTab('compress')" class="tab-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/60" data-tab="compress">
+                    <i data-lucide="minimize-2" class="w-5 h-5 text-indigo-500"></i>
+                    <span>Compress & Reduce</span>
+                </button>
+                <button onclick="switchTab('pages')" class="tab-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/60" data-tab="pages">
+                    <i data-lucide="grid" class="w-5 h-5 text-indigo-500"></i>
+                    <span>Page Management & Edit</span>
+                </button>
+                <button onclick="switchTab('convert')" class="tab-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/60" data-tab="convert">
+                    <i data-lucide="repeat" class="w-5 h-5 text-indigo-500"></i>
+                    <span>Format Conversions</span>
+                </button>
+                <button onclick="switchTab('forms')" class="tab-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/60" data-tab="forms">
+                    <i data-lucide="file-text" class="w-5 h-5 text-indigo-500"></i>
+                    <span>Interactive Form Filler</span>
+                </button>
+            </nav>
+
+            <!-- Fixed Footer Section with Developer Branding & Contact Details -->
+            <div class="shrink-0 border-t border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/50 p-3 space-y-2">
+                <div class="text-[11px] text-slate-600 dark:text-slate-300 space-y-1">
+                    <p class="font-semibold text-indigo-600 dark:text-indigo-400">Developed By : Nirbhaysingh Thakur (ATLabs India)</p>
+                    <p class="flex items-center space-x-1 text-slate-500 dark:text-slate-400">
+                        <i data-lucide="phone" class="w-3 h-3 shrink-0"></i>
+                        <span>Mobile: +91-79721 35001</span>
+                    </p>
+                    <p class="text-[10px] text-slate-400 dark:text-slate-500 italic">(Office Time)</p>
+                </div>
+                <div class="pt-1 border-t border-slate-200/60 dark:border-slate-700/60 flex items-center justify-between text-[10px] text-slate-400">
+                    <span>Client-Side Secure</span>
+                    <span>Files never leave machine</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-8 relative flex flex-col justify-between">
+            
+            <div class="max-w-5xl mx-auto w-full flex flex-col space-y-6">
+
+                <!-- Global Processing Overlay / Loader -->
+                <div id="global-loader" class="absolute inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center hidden">
+                    <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-2xl border border-slate-200 dark:border-slate-700 flex flex-col items-center max-w-sm w-full mx-4">
+                        <div class="relative w-16 h-16 mb-4">
+                            <div class="absolute inset-0 rounded-full border-4 border-indigo-100 dark:border-indigo-900"></div>
+                            <div class="absolute inset-0 rounded-full border-4 border-indigo-600 border-t-transparent animate-spin"></div>
+                        </div>
+                        <h3 id="loader-title" class="font-bold text-base text-slate-800 dark:text-slate-100 mb-1">Processing Document...</h3>
+                        <p id="loader-desc" class="text-xs text-slate-500 dark:text-slate-400 text-center mb-4">Please wait while we perform operations locally.</p>
+                        <div class="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-2 overflow-hidden">
+                            <div id="loader-progress" class="bg-indigo-600 h-full w-0 transition-all duration-300"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= TAB 1: COMPRESS & REDUCE ================= -->
+                <div id="tab-compress" class="tab-content flex-1 flex flex-col w-full">
+                    <div class="mb-6">
+                        <h2 class="text-xl sm:text-2xl font-bold tracking-tight">PDF & Image Compression</h2>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Reduce file sizes locally with adjustable quality settings.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Upload Box -->
+                        <div class="md:col-span-1 flex flex-col space-y-4">
+                            <div id="compress-dropzone" class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-2xl p-6 text-center cursor-pointer transition-all bg-white dark:bg-slate-800 flex flex-col items-center justify-center min-h-[220px]">
+                                <input type="file" id="compress-file-input" class="hidden" accept=".pdf,image/png,image/jpeg,image/webp">
+                                <div class="w-12 h-12 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-3">
+                                    <i data-lucide="upload-cloud" class="w-6 h-6"></i>
+                                </div>
+                                <p class="text-sm font-semibold mb-1">Drop file here or click to browse</p>
+                                <p class="text-xs text-slate-400">PDF, PNG, JPG, WEBP (Max 100MB)</p>
+                            </div>
+
+                            <div id="compress-controls" class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 space-y-4 hidden">
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-semibold">Compression Quality</span>
+                                    <span id="quality-val" class="text-sm font-bold text-indigo-600 dark:text-indigo-400">80%</span>
+                                </div>
+                                <input type="range" id="compress-quality" min="10" max="95" value="80" class="w-full accent-indigo-600 cursor-pointer">
+                                <div class="flex justify-between text-[11px] text-slate-400">
+                                    <span>High Compression</span>
+                                    <span>High Quality</span>
+                                </div>
+                                <button onclick="executeCompression()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition-all shadow-md shadow-indigo-500/25 flex items-center justify-center space-x-2">
+                                    <i data-lucide="minimize-2" class="w-4 h-4"></i>
+                                    <span>Compress File Now</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- File Info / Preview Area -->
+                        <div class="md:col-span-2 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
+                            <div id="compress-preview-empty" class="h-full flex flex-col items-center justify-center py-16 text-slate-400">
+                                <i data-lucide="file-search" class="w-12 h-12 mb-3 stroke-1"></i>
+                                <p class="text-sm font-medium">No file selected yet</p>
+                                <p class="text-xs text-slate-400 mt-1">Upload a PDF or image to inspect and compress</p>
+                            </div>
+                            <div id="compress-preview-active" class="space-y-6 hidden">
+                                <h3 class="font-semibold text-base border-b border-slate-100 dark:border-slate-700 pb-3">File Summary</h3>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700/50">
+                                        <span class="text-xs text-slate-400 block mb-1">File Name</span>
+                                        <span id="comp-file-name" class="font-medium text-sm truncate block">document.pdf</span>
+                                    </div>
+                                    <div class="bg-slate-50 dark:bg-slate-900/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700/50">
+                                        <span class="text-xs text-slate-400 block mb-1">Original Size</span>
+                                        <span id="comp-file-size" class="font-semibold text-sm text-indigo-600 dark:text-indigo-400">2.4 MB</span>
+                                    </div>
+                                </div>
+
+                                <div id="compress-result-box" class="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 rounded-xl p-5 hidden">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <div class="flex items-center space-x-2 text-emerald-700 dark:text-emerald-300 font-semibold text-sm">
+                                            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                                            <span>Compression Complete!</span>
+                                        </div>
+                                        <span id="comp-saved-badge" class="px-2 py-0.5 rounded-full text-xs font-bold bg-emerald-100 dark:bg-emerald-900 text-emerald-800 dark:text-emerald-200">-45% Size</span>
+                                    </div>
+                                    <div class="flex items-center justify-between text-xs text-slate-600 dark:text-slate-300 mb-4">
+                                        <span>New Size: <strong id="comp-new-size" class="text-slate-800 dark:text-slate-100">1.3 MB</strong></span>
+                                    </div>
+                                    <a id="comp-download-btn" href="#" download="" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition-all shadow-sm flex items-center justify-center space-x-2 text-sm">
+                                        <i data-lucide="download" class="w-4 h-4"></i>
+                                        <span>Download Compressed File</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= TAB 2: PAGE MANAGEMENT & EDIT ================= -->
+                <div id="tab-pages" class="tab-content flex-1 flex flex-col w-full hidden">
+                    <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-bold tracking-tight">PDF Page Management & Editing</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Reorder, rotate, delete, or split PDF pages visually.</p>
+                        </div>
+                        <div id="pdf-action-toolbar" class="flex flex-wrap items-center gap-2 hidden">
+                            <button onclick="rotateAllPages(90)" class="px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-xl text-xs font-medium flex items-center space-x-1.5 shadow-xs">
+                                <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+                                <span>Rotate All 90°</span>
+                            </button>
+                            <button onclick="splitPdf()" class="px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-xl text-xs font-medium flex items-center space-x-1.5 shadow-xs">
+                                <i data-lucide="scissors" class="w-4 h-4"></i>
+                                <span>Split Pages</span>
+                            </button>
+                            <button onclick="saveModifiedPdf()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-medium flex items-center space-x-1.5 shadow-md shadow-indigo-500/25">
+                                <i data-lucide="save" class="w-4 h-4"></i>
+                                <span>Save PDF</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="pages-upload-container" class="bg-white dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 rounded-2xl p-12 text-center cursor-pointer transition-all">
+                        <input type="file" id="pages-file-input" class="hidden" accept=".pdf">
+                        <div class="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="file-stack" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-base font-bold mb-1">Upload a PDF to manage pages</h3>
+                        <p class="text-xs text-slate-400 max-w-sm mx-auto">Drag and drop your PDF file to view thumbnails, reorder via drag & drop, rotate, or split.</p>
+                    </div>
+
+                    <div id="pages-editor-container" class="flex-1 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 flex flex-col hidden min-h-[400px]">
+                        <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-700">
+                            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Drag to reorder pages • Click rotate on individual page</span>
+                            <span id="pages-count-badge" class="text-xs font-bold bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 px-2.5 py-1 rounded-full">0 Pages</span>
+                        </div>
+                        <div id="thumbnail-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 overflow-y-auto custom-scrollbar pr-2 flex-1"></div>
+                    </div>
+                </div>
+
+                <!-- ================= TAB 3: FORMAT CONVERSIONS ================= -->
+                <div id="tab-convert" class="tab-content flex-1 flex flex-col w-full hidden">
+                    <div class="mb-6">
+                        <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Format Conversions</h2>
+                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Convert between PDF, Images, Word (.docx), Excel (.xlsx), and PowerPoint (.pptx).</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="md:col-span-1 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 space-y-5">
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Select Conversion Type</label>
+                                <select id="conversion-type" onchange="updateConversionAccept()" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                                    <option value="pdf-to-img">PDF to Images (ZIP)</option>
+                                    <option value="img-to-pdf">Images to PDF</option>
+                                    <option value="pdf-to-docx">PDF to Word (.docx)</option>
+                                    <option value="pdf-to-xlsx">PDF to Excel (.xlsx)</option>
+                                    <option value="pdf-to-pptx">PDF to PowerPoint (.pptx)</option>
+                                    <option value="img-to-docx">Image to Word (.docx - OCR)</option>
+                                    <option value="img-to-xlsx">Image to Excel (.xlsx - OCR)</option>
+                                </select>
+                            </div>
+
+                            <div id="convert-dropzone" class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 rounded-2xl p-6 text-center cursor-pointer transition-all bg-slate-50/50 dark:bg-slate-900/50 flex flex-col items-center justify-center min-h-[160px]">
+                                <input type="file" id="convert-file-input" class="hidden" multiple accept=".pdf">
+                                <div class="w-10 h-10 rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2">
+                                    <i data-lucide="upload" class="w-5 h-5"></i>
+                                </div>
+                                <p id="convert-drop-text" class="text-xs font-semibold mb-1">Click or drop file(s) here</p>
+                                <p class="text-[11px] text-slate-400">Supports multi-file for images</p>
+                            </div>
+
+                            <button onclick="executeConversion()" class="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition-all shadow-md shadow-indigo-500/25 flex items-center justify-center space-x-2 text-sm">
+                                <i data-lucide="repeat" class="w-4 h-4"></i>
+                                <span>Convert Document</span>
+                            </button>
+                        </div>
+
+                        <div class="md:col-span-2 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
+                            <div id="convert-empty" class="h-full flex flex-col items-center justify-center py-20 text-slate-400">
+                                <i data-lucide="file-code" class="w-12 h-12 mb-3 stroke-1"></i>
+                                <p class="text-sm font-medium">Ready to convert</p>
+                                <p class="text-xs text-slate-400 mt-1">Configure your conversion type and upload file on the left.</p>
+                            </div>
+                            <div id="convert-success" class="space-y-6 hidden">
+                                <h3 class="font-semibold text-base border-b border-slate-100 dark:border-slate-700 pb-3">Conversion Result</h3>
+                                <div class="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 rounded-xl p-6 text-center space-y-4">
+                                    <div class="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-300 flex items-center justify-center mx-auto">
+                                        <i data-lucide="check" class="w-6 h-6"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-emerald-800 dark:text-emerald-200 text-base mb-1">Conversion Successful!</h4>
+                                        <p id="convert-result-desc" class="text-xs text-slate-600 dark:text-slate-300">Your output file has been generated securely in your browser.</p>
+                                    </div>
+                                    <a id="convert-download-btn" href="#" download="" class="inline-flex items-center space-x-2 px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-xl shadow-md transition-all text-sm">
+                                        <i data-lucide="download" class="w-4 h-4"></i>
+                                        <span>Download Converted File</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ================= TAB 4: INTERACTIVE FORM FILLER ================= -->
+                <div id="tab-forms" class="tab-content flex-1 flex flex-col w-full hidden">
+                    <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Interactive PDF Form Filler</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Upload and fill out PDF forms directly, then flatten or export.</p>
+                        </div>
+                        <div id="form-action-toolbar" class="flex flex-wrap items-center gap-2 hidden">
+                            <button onclick="saveFilledPdf(false)" class="px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-xl text-xs font-medium flex items-center space-x-1.5 shadow-xs">
+                                <i data-lucide="file-check" class="w-4 h-4"></i>
+                                <span>Save Filled PDF</span>
+                            </button>
+                            <button onclick="saveFilledPdf(true)" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-medium flex items-center space-x-1.5 shadow-md shadow-indigo-500/25">
+                                <i data-lucide="image" class="w-4 h-4"></i>
+                                <span>Flatten & Download</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="form-upload-container" class="bg-white dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 rounded-2xl p-12 text-center cursor-pointer transition-all">
+                        <input type="file" id="form-file-input" class="hidden" accept=".pdf">
+                        <div class="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mx-auto mb-4">
+                            <i data-lucide="file-edit" class="w-8 h-8"></i>
+                        </div>
+                        <h3 class="text-base font-bold mb-1">Upload an interactive PDF form</h3>
+                        <p class="text-xs text-slate-400 max-w-sm mx-auto">Upload any PDF with form fields (text inputs, checkboxes) to fill them in right here.</p>
+                    </div>
+
+                    <div id="form-workspace" class="flex-1 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center overflow-y-auto custom-scrollbar hidden relative min-h-[350px]">
+                        <div id="form-fields-list" class="w-full max-w-2xl space-y-4">
+                            <!-- Dynamic form elements rendered here -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Bottom Horizontal Banner Ad Placeholder (Only Ad Remaining) -->
+            <div class="w-full bg-white dark:bg-slate-800 rounded-2xl p-3 border border-slate-200 dark:border-slate-700 shadow-xs mt-8">
+                <div class="text-[10px] text-slate-400 mb-1 uppercase font-semibold">Advertisement</div>
+                <div class="adsbygoogle-container">
+                    <ins class="adsbygoogle"
+                         style="display:block; width:100%; height:90px;"
+                         data-ad-client="ca-pub-8514479683501725"
+                         data-ad-slot="8841222432"
+                         data-ad-format="auto"
+                         data-full-width-responsive="true"></ins>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Application JavaScript Logic -->
+    <script>
+        lucide.createIcons();
+
+        // Theme Toggle Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        themeToggleBtn.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+        });
+        if (localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+
+        // Mobile Menu Toggle Logic
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const sidebarClose = document.getElementById('sidebar-close');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+
+        function toggleMobileMenu() {
+            sidebar.classList.toggle('-translate-x-full');
+            sidebarBackdrop.classList.toggle('hidden');
+        }
+
+        mobileMenuToggle.addEventListener('click', toggleMobileMenu);
+        sidebarClose.addEventListener('click', toggleMobileMenu);
+        sidebarBackdrop.addEventListener('click', toggleMobileMenu);
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-indigo-50', 'dark:bg-indigo-950/60', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold');
+                btn.classList.add('text-slate-600', 'dark:text-slate-300');
+            });
+
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.querySelector(`[data-tab="${tabId}"]`);
+            if (activeBtn) {
+                activeBtn.classList.remove('text-slate-600', 'dark:text-slate-300');
+                activeBtn.classList.add('bg-indigo-50', 'dark:bg-indigo-950/60', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold');
+            }
+            if (window.innerWidth < 768) {
+                toggleMobileMenu();
+            }
+            lucide.createIcons();
+        }
+        switchTab('compress');
+
+        // Global Loader Helpers
+        function showLoader(title = "Processing Document...", desc = "Please wait...") {
+            document.getElementById('loader-title').textContent = title;
+            document.getElementById('loader-desc').textContent = desc;
+            document.getElementById('loader-progress').style.width = '30%';
+            document.getElementById('global-loader').classList.remove('hidden');
+        }
+        function updateProgress(percent) {
+            document.getElementById('loader-progress').style.width = `${percent}%`;
+        }
+        function hideLoader() {
+            document.getElementById('loader-progress').style.width = '100%';
+            setTimeout(() => {
+                document.getElementById('global-loader').classList.add('hidden');
+                document.getElementById('loader-progress').style.width = '0%';
+            }, 300);
+        }
+
+        // ================= TAB 1 LOGIC: COMPRESS =================
+        let compressFile = null;
+        const compressDropzone = document.getElementById('compress-dropzone');
+        const compressFileInput = document.getElementById('compress-file-input');
+        const compressQualitySlider = document.getElementById('compress-quality');
+        const qualityVal = document.getElementById('quality-val');
+
+        compressQualitySlider.addEventListener('input', (e) => {
+            qualityVal.textContent = `${e.target.value}%`;
+        });
+
+        compressDropzone.addEventListener('click', () => compressFileInput.click());
+        compressDropzone.addEventListener('dragover', (e) => { e.preventDefault(); compressDropzone.classList.add('border-indigo-500'); });
+        compressDropzone.addEventListener('dragleave', () => compressDropzone.classList.remove('border-indigo-500'));
+        compressDropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            compressDropzone.classList.remove('border-indigo-500');
+            if (e.dataTransfer.files.length) handleCompressFileSelect(e.dataTransfer.files[0]);
+        });
+        compressFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) handleCompressFileSelect(e.target.files[0]);
+        });
+
+        function handleCompressFileSelect(file) {
+            compressFile = file;
+            document.getElementById('compress-preview-empty').classList.add('hidden');
+            document.getElementById('compress-preview-active').classList.remove('hidden');
+            document.getElementById('compress-controls').classList.remove('hidden');
+            document.getElementById('compress-result-box').classList.add('hidden');
+
+            document.getElementById('comp-file-name').textContent = file.name;
+            document.getElementById('comp-file-size').textContent = formatBytes(file.size);
+        }
+
+        async function executeCompression() {
+            if (!compressFile) return;
+            showLoader("Compressing File...", "Optimizing streams locally.");
+            updateProgress(40);
+
+            try {
+                const quality = parseInt(compressQualitySlider.value) / 100;
+                let compressedBlob;
+                let originalSize = compressFile.size;
+
+                if (compressFile.type === 'application/pdf') {
+                    const arrayBuffer = await compressFile.arrayBuffer();
+                    const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    const newPdf = await PDFLib.PDFDocument.create();
+
+                    for (let i = 1; i <= pdfDoc.numPages; i++) {
+                        const page = await pdfDoc.getPage(i);
+                        const viewport = page.getViewport({ scale: 1.5 });
+                        const canvas = document.createElement('canvas');
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+                        const ctx = canvas.getContext('2d');
+                        await page.render({ canvasContext: ctx, viewport }).promise;
+
+                        const imgDataUrl = canvas.toDataURL('image/jpeg', quality);
+                        const imgBytes = Uint8Array.from(atob(imgDataUrl.split(',')[1]), c => c.charCodeAt(0));
+                        
+                        const embeddedImage = await newPdf.embedJpg(imgBytes);
+                        const newPage = newPdf.addPage([viewport.width, viewport.height]);
+                        newPage.drawImage(embeddedImage, { x: 0, y: 0, width: viewport.width, height: viewport.height });
+                        updateProgress(40 + Math.floor((i / pdfDoc.numPages) * 40));
+                    }
+
+                    const pdfBytes = await newPdf.save();
+                    compressedBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+                } else {
+                    const img = new Image();
+                    const reader = new FileReader();
+                    
+                    await new Promise((resolve, reject) => {
+                        reader.onload = (e) => { img.src = e.target.result; };
+                        reader.onerror = reject;
+                        reader.readAsDataURL(compressFile);
+                    });
+                    await new Promise((resolve) => { img.onload = resolve; });
+
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+
+                    const mimeType = compressFile.type === 'image/png' ? 'image/jpeg' : compressFile.type;
+                    const dataUrl = canvas.toDataURL(mimeType, quality);
+                    const binStr = atob(dataUrl.split(',')[1]);
+                    const arr = new Uint8Array(binStr.length);
+                    for (let i = 0; i < binStr.length; i++) arr[i] = binStr.charCodeAt(i);
+                    compressedBlob = new Blob([arr], { type: mimeType });
+                }
+
+                updateProgress(90);
+                const newSize = compressedBlob.size;
+                const savings = Math.max(0, Math.round((1 - (newSize / originalSize)) * 100));
+
+                document.getElementById('comp-new-size').textContent = formatBytes(newSize);
+                document.getElementById('comp-saved-badge').textContent = `-${savings}% Size`;
+                
+                const downloadUrl = URL.createObjectURL(compressedBlob);
+                const dlBtn = document.getElementById('comp-download-btn');
+                dlBtn.href = downloadUrl;
+                dlBtn.download = `compressed_${compressFile.name}`;
+
+                document.getElementById('compress-result-box').classList.remove('hidden');
+                hideLoader();
+            } catch (err) {
+                console.error(err);
+                hideLoader();
+                alert('Compression failed.');
+            }
+        }
+
+
+        // ================= TAB 2 LOGIC: PAGES & EDIT =================
+        let currentPdfDocLib = null;
+        let pdfPageRotations = {};
+        let sortableInstance = null;
+
+        const pagesUploadContainer = document.getElementById('pages-upload-container');
+        const pagesFileInput = document.getElementById('pages-file-input');
+
+        pagesUploadContainer.addEventListener('click', () => pagesFileInput.click());
+        pagesUploadContainer.addEventListener('dragover', (e) => { e.preventDefault(); pagesUploadContainer.classList.add('border-indigo-500'); });
+        pagesUploadContainer.addEventListener('dragleave', () => pagesUploadContainer.classList.remove('border-indigo-500'));
+        pagesUploadContainer.addEventListener('drop', (e) => {
+            e.preventDefault();
+            pagesUploadContainer.classList.remove('border-indigo-500');
+            if (e.dataTransfer.files.length && e.dataTransfer.files[0].type === 'application/pdf') {
+                loadPdfForPageManagement(e.dataTransfer.files[0]);
+            }
+        });
+        pagesFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) loadPdfForPageManagement(e.target.files[0]);
+        });
+
+        async function loadPdfForPageManagement(file) {
+            showLoader("Loading PDF Pages...", "Rendering thumbnails...");
+            updateProgress(30);
+            try {
+                const loadedPdfArrayBuffer = await file.arrayBuffer();
+                currentPdfDocLib = await PDFLib.PDFDocument.load(loadedPdfArrayBuffer);
+                const loadingTask = pdfjsLib.getDocument({ data: loadedPdfArrayBuffer });
+                const pdfjsDoc = await loadingTask.promise;
+
+                const grid = document.getElementById('thumbnail-grid');
+                grid.innerHTML = '';
+                pdfPageRotations = {};
+
+                const numPages = pdfjsDoc.numPages;
+                document.getElementById('pages-count-badge').textContent = `${numPages} Pages`;
+
+                for (let i = 1; i <= numPages; i++) {
+                    pdfPageRotations[i - 1] = 0;
+                    const page = await pdfjsDoc.getPage(i);
+                    const viewport = page.getViewport({ scale: 0.4 });
+                    const canvas = document.createElement('canvas');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+
+                    const card = document.createElement('div');
+                    card.className = "relative bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-3 flex flex-col items-center group cursor-grab active:cursor-grabbing";
+                    card.dataset.pageIndex = i - 1;
+
+                    card.innerHTML = `
+                        <div class="w-full h-36 flex items-center justify-center overflow-hidden mb-2 rounded bg-white dark:bg-slate-800 shadow-xs">
+                            <img src="${canvas.toDataURL()}" class="max-h-full max-w-full object-contain transition-transform duration-200" id="thumb-img-${i-1}">
+                        </div>
+                        <div class="w-full flex items-center justify-between text-xs text-slate-500">
+                            <span class="font-bold">Page ${i}</span>
+                            <div class="flex items-center space-x-1">
+                                <button type="button" onclick="rotatePage(${i-1}, event)" class="p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300" title="Rotate 90°">
+                                    <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
+                                </button>
+                                <button type="button" onclick="deletePage(${i-1}, event)" class="p-1 hover:bg-rose-100 dark:hover:bg-rose-950/50 rounded text-rose-600" title="Delete Page">
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                    updateProgress(30 + Math.floor((i / numPages) * 60));
+                }
+
+                document.getElementById('pages-upload-container').classList.add('hidden');
+                document.getElementById('pages-editor-container').classList.remove('hidden');
+                document.getElementById('pdf-action-toolbar').classList.remove('hidden');
+
+                if (sortableInstance) sortableInstance.destroy();
+                sortableInstance = Sortable.create(grid, { animation: 150, ghostClass: 'opacity-40' });
+
+                lucide.createIcons();
+                hideLoader();
+            } catch (err) {
+                console.error(err);
+                hideLoader();
+                alert('Failed to load PDF for editing.');
+            }
+        }
+
+        function rotatePage(pageIdx, event) {
+            event.stopPropagation();
+            pdfPageRotations[pageIdx] = (pdfPageRotations[pageIdx] + 90) % 360;
+            const img = document.getElementById(`thumb-img-${pageIdx}`);
+            if (img) img.style.transform = `rotate(${pdfPageRotations[pageIdx]}deg)`;
+        }
+
+        function rotateAllPages(deg) {
+            for (let idx in pdfPageRotations) {
+                pdfPageRotations[idx] = (pdfPageRotations[idx] + deg) % 360;
+                const img = document.getElementById(`thumb-img-${idx}`);
+                if (img) img.style.transform = `rotate(${pdfPageRotations[idx]}deg)`;
+            }
+        }
+
+        function deletePage(pageIdx, event) {
+            event.stopPropagation();
+            const card = document.querySelector(`[data-page-index="${pageIdx}"]`);
+            if (card) card.remove();
+            const remaining = document.querySelectorAll('#thumbnail-grid > div').length;
+            document.getElementById('pages-count-badge').textContent = `${remaining} Pages`;
+        }
+
+        async function saveModifiedPdf() {
+            if (!currentPdfDocLib) return;
+            showLoader("Saving PDF...", "Rebuilding PDF structure...");
+            updateProgress(50);
+            try {
+                const gridCards = document.querySelectorAll('#thumbnail-grid > div');
+                const newPdf = await PDFLib.PDFDocument.create();
+                
+                const pageIndices = Array.from(gridCards).map(card => parseInt(card.dataset.pageIndex));
+                const copiedPages = await newPdf.copyPages(currentPdfDocLib, pageIndices);
+
+                copiedPages.forEach((page, i) => {
+                    const originalIdx = pageIndices[i];
+                    const currentRot = page.getRotation().angle;
+                    page.setRotation(PDFLib.degrees(currentRot + (pdfPageRotations[originalIdx] || 0)));
+                    newPdf.addPage(page);
+                });
+
+                updateProgress(85);
+                const pdfBytes = await newPdf.save();
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                downloadBlob(blob, 'modified_document.pdf');
+                hideLoader();
+            } catch (err) {
+                console.error(err);
+                hideLoader();
+                alert('Failed to save modified PDF.');
+            }
+        }
+
+        async function splitPdf() {
+            if (!currentPdfDocLib) return;
+            const pageNum = currentPdfDocLib.getPageCount();
+            const splitAtStr = prompt(`Enter page number to split after (1 to ${pageNum - 1}):`, Math.floor(pageNum / 2));
+            if (!splitAtStr) return;
+            const splitAt = parseInt(splitAtStr);
+            if (isNaN(splitAt) || splitAt < 1 || splitAt >= pageNum) {
+                alert('Invalid split page number.');
+                return;
+            }
+
+            showLoader("Splitting PDF...", "Generating files into ZIP archive.");
+            updateProgress(50);
+            try {
+                const zip = new JSZip();
+                
+                const pdf1 = await PDFLib.PDFDocument.create();
+                const pages1 = await pdf1.copyPages(currentPdfDocLib, Array.from({length: splitAt}, (_, i) => i));
+                pages1.forEach(p => pdf1.addPage(p));
+                const bytes1 = await pdf1.save();
+                zip.file("part_1.pdf", bytes1);
+
+                const pdf2 = await PDFLib.PDFDocument.create();
+                const pages2 = await pdf2.copyPages(currentPdfDocLib, Array.from({length: pageNum - splitAt}, (_, i) => i + splitAt));
+                pages2.forEach(p => pdf2.addPage(p));
+                const bytes2 = await pdf2.save();
+                zip.file("part_2.pdf", bytes2);
+
+                updateProgress(90);
+                const content = await zip.generateAsync({type: "blob"});
+                downloadBlob(content, "split_documents.zip");
+                hideLoader();
+            } catch (err) {
+                console.error(err);
+                hideLoader();
+                alert('Failed to split PDF.');
+            }
+        }
+
+
+        // ================= TAB 3 LOGIC: FORMAT CONVERSIONS =================
+        const convertDropzone = document.getElementById('convert-dropzone');
+        const convertFileInput = document.getElementById('convert-file-input');
+
+        function updateConversionAccept() {
+            const type = document.getElementById('conversion-type').value;
+            if (type === 'img-to-pdf' || type === 'img-to-docx' || type === 'img-to-xlsx') {
+                convertFileInput.accept = 'image/png,image/jpeg,image/webp';
+                convertFileInput.multiple = true;
+                document.getElementById('convert-drop-text').textContent = 'Drop image(s) here';
+            } else {
+                convertFileInput.accept = '.pdf';
+                convertFileInput.multiple = false;
+                document.getElementById('convert-drop-text').textContent = 'Drop PDF here';
+            }
+        }
+
+        convertDropzone.addEventListener('click', () => convertFileInput.click());
+        convertDropzone.addEventListener('dragover', (e) => { e.preventDefault(); convertDropzone.classList.add('border-indigo-500'); });
+        convertDropzone.addEventListener('dragleave', () => convertDropzone.classList.remove('border-indigo-500'));
+        convertDropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            convertDropzone.classList.remove('border-indigo-500');
+            if (e.dataTransfer.files.length) convertFileInput.files = e.dataTransfer.files;
+        });
+
+        async function executeConversion() {
+            const type = document.getElementById('conversion-type').value;
+            const files = convertFileInput.files;
+            if (!files.length) {
+                alert('Please select a file to convert.');
+                return;
+            }
+
+            showLoader("Converting Document...", "Processing formats locally...");
+            updateProgress(30);
+
+            try {
+                let outputBlob, outputFilename;
+
+                if (type === 'pdf-to-img') {
+                    const file = files[0];
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    const zip = new JSZip();
+
+                    for (let i = 1; i <= pdfDoc.numPages; i++) {
+                        const page = await pdfDoc.getPage(i);
+                        const viewport = page.getViewport({ scale: 1.5 });
+                        const canvas = document.createElement('canvas');
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+                        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+
+                        const dataUrl = canvas.toDataURL('image/jpeg', 0.9);
+                        const bin = atob(dataUrl.split(',')[1]);
+                        const arr = new Uint8Array(bin.length);
+                        for (let j = 0; j < bin.length; j++) arr[j] = bin.charCodeAt(j);
+                        zip.file(`page_${i}.jpg`, arr);
+                        updateProgress(30 + Math.floor((i / pdfDoc.numPages) * 50));
+                    }
+                    outputBlob = await zip.generateAsync({ type: 'blob' });
+                    outputFilename = 'converted_images.zip';
+
+                } else if (type === 'img-to-pdf') {
+                    const pdfDoc = await PDFLib.PDFDocument.create();
+                    for (let i = 0; i < files.length; i++) {
+                        const file = files[i];
+                        const arrayBuffer = await file.arrayBuffer();
+                        let embeddedImg;
+                        if (file.type === 'image/png') {
+                            embeddedImg = await pdfDoc.embedPng(arrayBuffer);
+                        } else {
+                            embeddedImg = await pdfDoc.embedJpg(arrayBuffer);
+                        }
+                        const page = pdfDoc.addPage([embeddedImg.width, embeddedImg.height]);
+                        page.drawImage(embeddedImg, { x: 0, y: 0, width: embeddedImg.width, height: embeddedImg.height });
+                        updateProgress(30 + Math.floor((i / files.length) * 50));
+                    }
+                    const pdfBytes = await pdfDoc.save();
+                    outputBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+                    outputFilename = 'images_combined.pdf';
+
+                } else if (type === 'pdf-to-docx') {
+                    const file = files[0];
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    
+                    const docxParagraphs = [];
+                    for (let i = 1; i <= pdfDoc.numPages; i++) {
+                        const page = await pdfDoc.getPage(i);
+                        const textContent = await page.getTextContent();
+                        const pageText = textContent.items.map(item => item.str).join(' ');
+                        docxParagraphs.push(new docx.Paragraph({ children: [new docx.TextRun(pageText)] }));
+                        updateProgress(30 + Math.floor((i / pdfDoc.numPages) * 50));
+                    }
+
+                    const doc = new docx.Document({ sections: [{ children: docxParagraphs }] });
+                    outputBlob = await docx.Packer.toBlob(doc);
+                    outputFilename = 'converted_document.docx';
+
+                } else if (type === 'pdf-to-xlsx') {
+                    const file = files[0];
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    
+                    const rows = [];
+                    for (let i = 1; i <= pdfDoc.numPages; i++) {
+                        const page = await pdfDoc.getPage(i);
+                        const textContent = await page.getTextContent();
+                        const pageText = textContent.items.map(item => item.str).join(' | ');
+                        rows.push([`Page ${i}`, pageText]);
+                        updateProgress(30 + Math.floor((i / pdfDoc.numPages) * 50));
+                    }
+
+                    const ws = XLSX.utils.aoa_to_sheet([["Page", "Extracted Content"], ...rows]);
+                    const wb = XLSX.utils.book_new();
+                    XLSX.utils.book_append_sheet(wb, ws, "Extracted Data");
+                    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+                    outputBlob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                    outputFilename = 'converted_data.xlsx';
+
+                } else if (type === 'pdf-to-pptx') {
+                    const file = files[0];
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    
+                    let pptx = new PptxGenJS();
+                    for (let i = 1; i <= pdfDoc.numPages; i++) {
+                        const page = await pdfDoc.getPage(i);
+                        const viewport = page.getViewport({ scale: 1.0 });
+                        const canvas = document.createElement('canvas');
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+                        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+
+                        const imgDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+                        let slide = pptx.addSlide();
+                        slide.addImage({ data: imgDataUrl, x: 0, y: 0, w: '100%', h: '100%' });
+                        updateProgress(30 + Math.floor((i / pdfDoc.numPages) * 50));
+                    }
+                    outputBlob = await pptx.write({ outputType: 'blob' });
+                    outputFilename = 'presentation.pptx';
+
+                } else if (type === 'img-to-docx' || type === 'img-to-xlsx') {
+                    const file = files[0];
+                    const ocrResult = await Tesseract.recognize(file, 'eng', {
+                        logger: m => { if (m.status === 'recognizing text') updateProgress(30 + Math.floor(m.progress * 50)); }
+                    });
+                    const text = ocrResult.data.text;
+
+                    if (type === 'img-to-docx') {
+                        const doc = new docx.Document({
+                            sections: [{ children: [new docx.Paragraph({ children: [new docx.TextRun(text)] })] }]
+                        });
+                        outputBlob = await docx.Packer.toBlob(doc);
+                        outputFilename = 'ocr_document.docx';
+                    } else {
+                        const lines = text.split('\n').filter(l => l.trim().length > 0).map(l => [l]);
+                        const ws = XLSX.utils.aoa_to_sheet([["OCR Extracted Text"], ...lines]);
+                        const wb = XLSX.utils.book_new();
+                        XLSX.utils.book_append_sheet(wb, ws, "OCR Data");
+                        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+                        outputBlob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        outputFilename = 'ocr_data.xlsx';
+                    }
+                }
+
+                updateProgress(100);
+                const downloadUrl = URL.createObjectURL(outputBlob);
+                const dlBtn = document.getElementById('convert-download-btn');
+                dlBtn.href = downloadUrl;
+                dlBtn.download = outputFilename;
+
+                document.getElementById('convert-empty').classList.add('hidden');
+                document.getElementById('convert-success').classList.remove('hidden');
+                hideLoader();
+            } catch (err) {
+                console.error(err);
+                hideLoader();
+                alert('Conversion failed.');
+            }
+        }
+
+
+        // ================= TAB 4 LOGIC: INTERACTIVE FORM FILLER =================
+        let formPdfDocLib = null;
+        let formFieldsState = {};
+
+        const formUploadContainer = document.getElementById('form-upload-container');
+        const formFileInput = document.getElementById('form-file-input');
+
+        formUploadContainer.addEventListener('click', () => formFileInput.click());
+        formUploadContainer.addEventListener('dragover', (e) => { e.preventDefault(); formUploadContainer.classList.add('border-indigo-500'); });
+        formUploadContainer.addEventListener('dragleave', () => formUploadContainer.classList.remove('border-indigo-500'));
+        formUploadContainer.addEventListener('drop', (e) => {
+            e.preventDefault();
+            formUploadContainer.classList.remove('border-indigo-500');
+            if (e.dataTransfer.files.length && e.dataTransfer.files[0].type === 'application/pdf') {
+                loadPdfForForms(e.dataTransfer.files[0]);
+            }
+        });
+        formFileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) loadPdfForForms(e.target.files[0]);
+        });
+
+        async function loadPdfForForms(file) {
+            showLoader("Loading Form PDF...", "Detecting interactive form fields.");
+            updateProgress(40);
+            try {
+                const arrayBuffer = await file.arrayBuffer();
+                formPdfDocLib = await PDFLib.PDFDocument.load(arrayBuffer);
+                
+                let form;
+                try {
+                    form = formPdfDocLib.getForm();
+                } catch (e) {
+                    alert('This PDF does not contain standard interactive form fields.');
+                    hideLoader();
+                    return;
+                }
+
+                const fields = form.getFields();
+                const fieldsListContainer = document.getElementById('form-fields-list');
+                fieldsListContainer.innerHTML = '';
+                formFieldsState = {};
+
+                if (fields.length === 0) {
+                    fieldsListContainer.innerHTML = `<p class="text-sm text-center text-slate-400 py-8">No editable form fields found in this PDF.</p>`;
+                } else {
+                    fields.forEach(field => {
+                        const name = field.getName();
+                        formFieldsState[name] = '';
+
+                        const wrapper = document.createElement('div');
+                        wrapper.className = "bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col space-y-1.5";
+                        wrapper.innerHTML = `
+                            <label class="text-xs font-bold text-slate-600 dark:text-slate-300">${name} <span class="text-[10px] text-indigo-500 font-normal">(${field.constructor.name})</span></label>
+                            <input type="text" data-fieldname="${name}" placeholder="Enter value..." class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                        `;
+                        
+                        const input = wrapper.querySelector('input');
+                        input.addEventListener('input', (e) => {
+                            formFieldsState[name] = e.target.value;
+                        });
+                        fieldsListContainer.appendChild(wrapper);
+                    });
+                }
+
+                document.getElementById('form-upload-container').classList.add('hidden');
+                document.getElementById('form-workspace').classList.remove('hidden');
+                document.getElementById('form-action-toolbar').classList.remove('hidden');
+
+                hideLoader();
+            } catch (err) {
+                console.error(err);
+                hideLoader();
+                alert('Failed to load interactive form fields.');
+            }
+        }
+
+        async function saveFilledPdf(flatten) {
+            if (!formPdfDocLib) return;
+            showLoader("Saving Form...", "Filling and exporting PDF...");
+            updateProgress(50);
+            try {
+                const form = formPdfDocLib.getForm();
+                for (let [name, val] of Object.entries(formFieldsState)) {
+                    try {
+                        const field = form.getField(name);
+                        if (field instanceof PDFLib.PDFTextField) {
+                            field.setText(val);
+                        } else if (field instanceof PDFLib.PDFCheckBox && (val.toLowerCase() === 'true' || val === '1' || val.toLowerCase() === 'yes')) {
+                            field.check();
+                        }
+                    } catch (e) { console.warn(e); }
+                }
+
+                if (flatten) {
+                    form.flatten();
+                }
+
+                updateProgress(85);
+                const pdfBytes = await formPdfDocLib.save();
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                downloadBlob(blob, flatten ? 'flattened_form.pdf' : 'filled_form.pdf');
+                hideLoader();
+            } catch (err) {
+                console.error(err);
+                hideLoader();
+                alert('Failed to save filled form.');
+            }
+        }
+
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+
+        function downloadBlob(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        try {
+            // Push only for the bottom banner ad unit
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+            console.warn("AdSense push skipped due to local environment sizing constraints.");
+        }
+    </script>
+</body>
+</html>
