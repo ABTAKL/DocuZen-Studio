@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DocuZen Studio V6 - ATLabs India</title>
+    <title>DocuZen Studio V7 - ATLABS India </title>
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -50,12 +50,6 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(156, 163, 175, 0.5); border-radius: 3px; }
         .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(156, 163, 175, 0.8); }
-        
-        .adsbygoogle-container {
-            min-width: 200px;
-            min-height: 90px;
-            display: block;
-        }
     </style>
 </head>
 <body class="h-full bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
@@ -63,7 +57,6 @@
     <!-- Top Navigation Bar -->
     <header class="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-4 sm:px-6 py-3 flex items-center justify-between shrink-0 shadow-sm z-30">
         <div class="flex items-center space-x-3">
-            <!-- Mobile Menu Toggle Button -->
             <button id="mobile-menu-toggle" class="md:hidden p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300">
                 <i data-lucide="menu" class="w-6 h-6"></i>
             </button>
@@ -89,20 +82,16 @@
 
     <!-- Main Workspace Layout -->
     <div class="flex-1 flex overflow-hidden relative">
-        
-        <!-- Mobile Sidebar Backdrop Overlay -->
         <div id="sidebar-backdrop" class="fixed inset-0 bg-slate-900/50 z-20 hidden md:hidden"></div>
 
         <!-- Sidebar Navigation -->
         <aside id="sidebar" class="absolute md:relative inset-y-0 left-0 w-72 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col shrink-0 select-none z-30 transform -translate-x-full md:translate-x-0 transition-transform duration-200">
-            <div class="p-4 border-b border-slate-100 dark:border-slate-700/50 flex items-center justify-between shrink-0">
+            <div class="p-4 border-b border-slate-100 dark:border-slate-700/50 flex items-center justify-between">
                 <span class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Tools Menu</span>
                 <button id="sidebar-close" class="md:hidden text-slate-400 hover:text-slate-600 dark:hover:text-slate-200">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
-            
-            <!-- Scrollable Menu Section -->
             <nav class="flex-1 overflow-y-auto custom-scrollbar p-3 space-y-1.5">
                 <button onclick="switchTab('compress')" class="tab-btn w-full flex items-center space-x-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/60" data-tab="compress">
                     <i data-lucide="minimize-2" class="w-5 h-5 text-indigo-500"></i>
@@ -122,29 +111,26 @@
                 </button>
             </nav>
 
-            <!-- Fixed Footer Section with Developer Branding & Contact Details -->
-            <div class="shrink-0 border-t border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/50 p-3 space-y-2">
-                <div class="text-[11px] text-slate-600 dark:text-slate-300 space-y-1">
-                    <p class="font-semibold text-indigo-600 dark:text-indigo-400">Developed By : Nirbhaysingh Thakur (ATLabs India)</p>
-                    <p class="flex items-center space-x-1 text-slate-500 dark:text-slate-400">
-                        <i data-lucide="phone" class="w-3 h-3 shrink-0"></i>
-                        <span>Mobile: +91-79721 35001</span>
-                    </p>
-                    <p class="text-[10px] text-slate-400 dark:text-slate-500 italic">(Office Time)</p>
+            <div class="p-3 border-t border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/50">
+                <div class="text-[10px] text-slate-400 mb-1 uppercase font-semibold">Advertisement</div>
+                <div class="overflow-hidden rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 p-1 flex justify-center">
+                    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8514479683501725" crossorigin="anonymous"></script>
+                    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8514479683501725" data-ad-slot="4972937647" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
                 </div>
-                <div class="pt-1 border-t border-slate-200/60 dark:border-slate-700/60 flex items-center justify-between text-[10px] text-slate-400">
-                    <span>Client-Side Secure</span>
-                    <span>Files never leave machine</span>
-                </div>
+            </div>
+
+            <div class="p-4 border-t border-slate-100 dark:border-slate-700/50 bg-slate-50/50 dark:bg-slate-800/50 text-xs text-slate-500 dark:text-slate-400">
+                <p class="font-medium">Client-Side Guarantee</p>
+                <p class="mt-0.5 text-[11px] text-slate-400 dark:text-slate-500">Files never leave your machine.</p>
             </div>
         </aside>
 
         <!-- Main Content Area -->
         <main class="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-8 relative flex flex-col justify-between">
-            
             <div class="max-w-5xl mx-auto w-full flex flex-col space-y-6">
 
-                <!-- Global Processing Overlay / Loader -->
+                <!-- Global Loader -->
                 <div id="global-loader" class="absolute inset-0 bg-slate-900/40 backdrop-blur-xs z-50 flex items-center justify-center hidden">
                     <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-2xl border border-slate-200 dark:border-slate-700 flex flex-col items-center max-w-sm w-full mx-4">
                         <div class="relative w-16 h-16 mb-4">
@@ -159,15 +145,20 @@
                     </div>
                 </div>
 
-                <!-- ================= TAB 1: COMPRESS & REDUCE ================= -->
+                <!-- ================= TAB 1: COMPRESS ================= -->
                 <div id="tab-compress" class="tab-content flex-1 flex flex-col w-full">
-                    <div class="mb-6">
-                        <h2 class="text-xl sm:text-2xl font-bold tracking-tight">PDF & Image Compression</h2>
-                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Reduce file sizes locally with adjustable quality settings.</p>
+                    <div class="mb-6 flex items-center justify-between">
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-bold tracking-tight">PDF & Image Compression</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Reduce file sizes locally with adjustable quality settings.</p>
+                        </div>
+                        <button onclick="resetCompressTool()" class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center space-x-1">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                            <span>Start New Task</span>
+                        </button>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- Upload Box -->
                         <div class="md:col-span-1 flex flex-col space-y-4">
                             <div id="compress-dropzone" class="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-2xl p-6 text-center cursor-pointer transition-all bg-white dark:bg-slate-800 flex flex-col items-center justify-center min-h-[220px]">
                                 <input type="file" id="compress-file-input" class="hidden" accept=".pdf,image/png,image/jpeg,image/webp">
@@ -195,7 +186,6 @@
                             </div>
                         </div>
 
-                        <!-- File Info / Preview Area -->
                         <div class="md:col-span-2 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 flex flex-col justify-between">
                             <div id="compress-preview-empty" class="h-full flex flex-col items-center justify-center py-16 text-slate-400">
                                 <i data-lucide="file-search" class="w-12 h-12 mb-3 stroke-1"></i>
@@ -240,15 +230,21 @@
                 <div id="tab-pages" class="tab-content flex-1 flex flex-col w-full hidden">
                     <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                         <div>
-                            <h2 class="text-xl sm:text-2xl font-bold tracking-tight">PDF Page Management & Editing</h2>
-                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Reorder, rotate, delete, or split PDF pages visually.</p>
+                            <h2 class="text-xl sm:text-2xl font-bold tracking-tight">PDF Page Management & Merge</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Reorder, rotate, delete, merge multiple PDFs, or split pages.</p>
                         </div>
                         <div id="pdf-action-toolbar" class="flex flex-wrap items-center gap-2 hidden">
-                            <button onclick="rotateAllPages(90)" class="px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-xl text-xs font-medium flex items-center space-x-1.5 shadow-xs">
+                            <button onclick="document.getElementById('append-pdf-input').click()" class="px-3 py-2 bg-indigo-50 dark:bg-indigo-950 border border-indigo-200 dark:border-indigo-800 text-indigo-600 dark:text-indigo-300 hover:bg-indigo-100 rounded-xl text-xs font-medium flex items-center space-x-1.5 shadow-xs">
+                                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                                <span>Merge / Add PDF</span>
+                            </button>
+                            <input type="file" id="append-pdf-input" class="hidden" accept=".pdf" multiple onchange="appendPdfsToManagement(this.files)">
+                            
+                            <button onclick="rotateAllPages(90)" class="px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 rounded-xl text-xs font-medium flex items-center space-x-1.5 shadow-xs">
                                 <i data-lucide="rotate-cw" class="w-4 h-4"></i>
                                 <span>Rotate All 90°</span>
                             </button>
-                            <button onclick="splitPdf()" class="px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-xl text-xs font-medium flex items-center space-x-1.5 shadow-xs">
+                            <button onclick="splitPdf()" class="px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 rounded-xl text-xs font-medium flex items-center space-x-1.5 shadow-xs">
                                 <i data-lucide="scissors" class="w-4 h-4"></i>
                                 <span>Split Pages</span>
                             </button>
@@ -256,16 +252,20 @@
                                 <i data-lucide="save" class="w-4 h-4"></i>
                                 <span>Save PDF</span>
                             </button>
+                            <button onclick="resetPagesTool()" class="px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 dark:bg-rose-950 dark:text-rose-300 rounded-xl text-xs font-medium flex items-center space-x-1">
+                                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                                <span>Reset</span>
+                            </button>
                         </div>
                     </div>
 
                     <div id="pages-upload-container" class="bg-white dark:bg-slate-800 border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 rounded-2xl p-12 text-center cursor-pointer transition-all">
-                        <input type="file" id="pages-file-input" class="hidden" accept=".pdf">
+                        <input type="file" id="pages-file-input" class="hidden" accept=".pdf" multiple>
                         <div class="w-16 h-16 rounded-2xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mx-auto mb-4">
                             <i data-lucide="file-stack" class="w-8 h-8"></i>
                         </div>
-                        <h3 class="text-base font-bold mb-1">Upload a PDF to manage pages</h3>
-                        <p class="text-xs text-slate-400 max-w-sm mx-auto">Drag and drop your PDF file to view thumbnails, reorder via drag & drop, rotate, or split.</p>
+                        <h3 class="text-base font-bold mb-1">Upload one or more PDFs to manage & merge</h3>
+                        <p class="text-xs text-slate-400 max-w-sm mx-auto">Drag and drop PDF files to view thumbnails, merge files, reorder via drag & drop, rotate, or split.</p>
                     </div>
 
                     <div id="pages-editor-container" class="flex-1 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 flex flex-col hidden min-h-[400px]">
@@ -279,9 +279,15 @@
 
                 <!-- ================= TAB 3: FORMAT CONVERSIONS ================= -->
                 <div id="tab-convert" class="tab-content flex-1 flex flex-col w-full hidden">
-                    <div class="mb-6">
-                        <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Format Conversions</h2>
-                        <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Convert between PDF, Images, Word (.docx), Excel (.xlsx), and PowerPoint (.pptx).</p>
+                    <div class="mb-6 flex items-center justify-between">
+                        <div>
+                            <h2 class="text-xl sm:text-2xl font-bold tracking-tight">Format Conversions</h2>
+                            <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Convert between PDF, Images, Word (.docx), Excel (.xlsx), and PowerPoint (.pptx).</p>
+                        </div>
+                        <button onclick="resetConvertTool()" class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-medium flex items-center space-x-1">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                            <span>Start New Task</span>
+                        </button>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -348,13 +354,17 @@
                             <p class="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">Upload and fill out PDF forms directly, then flatten or export.</p>
                         </div>
                         <div id="form-action-toolbar" class="flex flex-wrap items-center gap-2 hidden">
-                            <button onclick="saveFilledPdf(false)" class="px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 rounded-xl text-xs font-medium flex items-center space-x-1.5 shadow-xs">
+                            <button onclick="saveFilledPdf(false)" class="px-3 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 rounded-xl text-xs font-medium flex items-center space-x-1.5 shadow-xs">
                                 <i data-lucide="file-check" class="w-4 h-4"></i>
                                 <span>Save Filled PDF</span>
                             </button>
                             <button onclick="saveFilledPdf(true)" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl text-xs font-medium flex items-center space-x-1.5 shadow-md shadow-indigo-500/25">
                                 <i data-lucide="image" class="w-4 h-4"></i>
                                 <span>Flatten & Download</span>
+                            </button>
+                            <button onclick="resetFormsTool()" class="px-3 py-2 bg-rose-50 text-rose-600 dark:bg-rose-950 dark:text-rose-300 rounded-xl text-xs font-medium flex items-center space-x-1">
+                                <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                                <span>Reset</span>
                             </button>
                         </div>
                     </div>
@@ -369,27 +379,19 @@
                     </div>
 
                     <div id="form-workspace" class="flex-1 bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center overflow-y-auto custom-scrollbar hidden relative min-h-[350px]">
-                        <div id="form-fields-list" class="w-full max-w-2xl space-y-4">
-                            <!-- Dynamic form elements rendered here -->
-                        </div>
+                        <div id="form-fields-list" class="w-full max-w-2xl space-y-4"></div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Bottom Horizontal Banner Ad Placeholder (Only Ad Remaining) -->
+            <!-- Bottom Horizontal Banner Ad Placeholder -->
             <div class="w-full bg-white dark:bg-slate-800 rounded-2xl p-3 border border-slate-200 dark:border-slate-700 shadow-xs mt-8">
                 <div class="text-[10px] text-slate-400 mb-1 uppercase font-semibold">Advertisement</div>
-                <div class="adsbygoogle-container">
-                    <ins class="adsbygoogle"
-                         style="display:block; width:100%; height:90px;"
-                         data-ad-client="ca-pub-8514479683501725"
-                         data-ad-slot="8841222432"
-                         data-ad-format="auto"
-                         data-full-width-responsive="true"></ins>
-                </div>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8514479683501725" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-8514479683501725" data-ad-slot="8841222432" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
             </div>
-
         </main>
     </div>
 
@@ -417,7 +419,6 @@
             sidebar.classList.toggle('-translate-x-full');
             sidebarBackdrop.classList.toggle('hidden');
         }
-
         mobileMenuToggle.addEventListener('click', toggleMobileMenu);
         sidebarClose.addEventListener('click', toggleMobileMenu);
         sidebarBackdrop.addEventListener('click', toggleMobileMenu);
@@ -436,9 +437,7 @@
                 activeBtn.classList.remove('text-slate-600', 'dark:text-slate-300');
                 activeBtn.classList.add('bg-indigo-50', 'dark:bg-indigo-950/60', 'text-indigo-600', 'dark:text-indigo-400', 'font-semibold');
             }
-            if (window.innerWidth < 768) {
-                toggleMobileMenu();
-            }
+            if (window.innerWidth < 768) toggleMobileMenu();
             lucide.createIcons();
         }
         switchTab('compress');
@@ -468,10 +467,7 @@
         const compressQualitySlider = document.getElementById('compress-quality');
         const qualityVal = document.getElementById('quality-val');
 
-        compressQualitySlider.addEventListener('input', (e) => {
-            qualityVal.textContent = `${e.target.value}%`;
-        });
-
+        compressQualitySlider.addEventListener('input', (e) => { qualityVal.textContent = `${e.target.value}%`; });
         compressDropzone.addEventListener('click', () => compressFileInput.click());
         compressDropzone.addEventListener('dragover', (e) => { e.preventDefault(); compressDropzone.classList.add('border-indigo-500'); });
         compressDropzone.addEventListener('dragleave', () => compressDropzone.classList.remove('border-indigo-500'));
@@ -490,9 +486,17 @@
             document.getElementById('compress-preview-active').classList.remove('hidden');
             document.getElementById('compress-controls').classList.remove('hidden');
             document.getElementById('compress-result-box').classList.add('hidden');
-
             document.getElementById('comp-file-name').textContent = file.name;
             document.getElementById('comp-file-size').textContent = formatBytes(file.size);
+        }
+
+        function resetCompressTool() {
+            compressFile = null;
+            compressFileInput.value = '';
+            document.getElementById('compress-preview-empty').classList.remove('hidden');
+            document.getElementById('compress-preview-active').classList.add('hidden');
+            document.getElementById('compress-controls').classList.add('hidden');
+            document.getElementById('compress-result-box').classList.add('hidden');
         }
 
         async function executeCompression() {
@@ -533,7 +537,6 @@
                 } else {
                     const img = new Image();
                     const reader = new FileReader();
-                    
                     await new Promise((resolve, reject) => {
                         reader.onload = (e) => { img.src = e.target.result; };
                         reader.onerror = reject;
@@ -577,7 +580,7 @@
         }
 
 
-        // ================= TAB 2 LOGIC: PAGES & EDIT =================
+        // ================= TAB 2 LOGIC: PAGES & MERGE =================
         let currentPdfDocLib = null;
         let pdfPageRotations = {};
         let sortableInstance = null;
@@ -591,63 +594,66 @@
         pagesUploadContainer.addEventListener('drop', (e) => {
             e.preventDefault();
             pagesUploadContainer.classList.remove('border-indigo-500');
-            if (e.dataTransfer.files.length && e.dataTransfer.files[0].type === 'application/pdf') {
-                loadPdfForPageManagement(e.dataTransfer.files[0]);
-            }
+            if (e.dataTransfer.files.length) loadPdfForPageManagement(e.dataTransfer.files);
         });
         pagesFileInput.addEventListener('change', (e) => {
-            if (e.target.files.length) loadPdfForPageManagement(e.target.files[0]);
+            if (e.target.files.length) loadPdfForPageManagement(e.target.files);
         });
 
-        async function loadPdfForPageManagement(file) {
-            showLoader("Loading PDF Pages...", "Rendering thumbnails...");
-            updateProgress(30);
+        async function loadPdfForPageManagement(files) {
+            showLoader("Loading PDF(s)...", "Merging and rendering thumbnails...");
+            updateProgress(20);
             try {
-                const loadedPdfArrayBuffer = await file.arrayBuffer();
-                currentPdfDocLib = await PDFLib.PDFDocument.load(loadedPdfArrayBuffer);
-                const loadingTask = pdfjsLib.getDocument({ data: loadedPdfArrayBuffer });
-                const pdfjsDoc = await loadingTask.promise;
-
+                currentPdfDocLib = await PDFLib.PDFDocument.create();
                 const grid = document.getElementById('thumbnail-grid');
                 grid.innerHTML = '';
                 pdfPageRotations = {};
+                let globalPageIndex = 0;
 
-                const numPages = pdfjsDoc.numPages;
-                document.getElementById('pages-count-badge').textContent = `${numPages} Pages`;
+                for (let f = 0; f < files.length; f++) {
+                    const fileArrayBuffer = await files[f].arrayBuffer();
+                    const donorPdf = await PDFLib.PDFDocument.load(fileArrayBuffer);
+                    const donorIndices = donorPdf.getPageIndices();
+                    const copiedPages = await currentPdfDocLib.copyPages(donorPdf, donorIndices);
+                    copiedPages.forEach(p => currentPdfDocLib.addPage(p));
 
-                for (let i = 1; i <= numPages; i++) {
-                    pdfPageRotations[i - 1] = 0;
-                    const page = await pdfjsDoc.getPage(i);
-                    const viewport = page.getViewport({ scale: 0.4 });
-                    const canvas = document.createElement('canvas');
-                    canvas.width = viewport.width;
-                    canvas.height = viewport.height;
-                    await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+                    const pdfjsDoc = await pdfjsLib.getDocument({ data: fileArrayBuffer }).promise;
+                    for (let i = 1; i <= pdfjsDoc.numPages; i++) {
+                        pdfPageRotations[globalPageIndex] = 0;
+                        const page = await pdfjsDoc.getPage(i);
+                        const viewport = page.getViewport({ scale: 0.4 });
+                        const canvas = document.createElement('canvas');
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+                        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
 
-                    const card = document.createElement('div');
-                    card.className = "relative bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-3 flex flex-col items-center group cursor-grab active:cursor-grabbing";
-                    card.dataset.pageIndex = i - 1;
+                        const card = document.createElement('div');
+                        card.className = "relative bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-3 flex flex-col items-center group cursor-grab active:cursor-grabbing";
+                        card.dataset.pageIndex = globalPageIndex;
 
-                    card.innerHTML = `
-                        <div class="w-full h-36 flex items-center justify-center overflow-hidden mb-2 rounded bg-white dark:bg-slate-800 shadow-xs">
-                            <img src="${canvas.toDataURL()}" class="max-h-full max-w-full object-contain transition-transform duration-200" id="thumb-img-${i-1}">
-                        </div>
-                        <div class="w-full flex items-center justify-between text-xs text-slate-500">
-                            <span class="font-bold">Page ${i}</span>
-                            <div class="flex items-center space-x-1">
-                                <button type="button" onclick="rotatePage(${i-1}, event)" class="p-1 hover:bg-slate-200 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300" title="Rotate 90°">
-                                    <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
-                                </button>
-                                <button type="button" onclick="deletePage(${i-1}, event)" class="p-1 hover:bg-rose-100 dark:hover:bg-rose-950/50 rounded text-rose-600" title="Delete Page">
-                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                </button>
+                        card.innerHTML = `
+                            <div class="w-full h-36 flex items-center justify-center overflow-hidden mb-2 rounded bg-white dark:bg-slate-800 shadow-xs">
+                                <img src="${canvas.toDataURL()}" class="max-h-full max-w-full object-contain transition-transform duration-200" id="thumb-img-${globalPageIndex}">
                             </div>
-                        </div>
-                    `;
-                    grid.appendChild(card);
-                    updateProgress(30 + Math.floor((i / numPages) * 60));
+                            <div class="w-full flex items-center justify-between text-xs text-slate-500">
+                                <span class="font-bold">Page ${globalPageIndex + 1}</span>
+                                <div class="flex items-center space-x-1">
+                                    <button type="button" onclick="rotatePage(${globalPageIndex}, event)" class="p-1 hover:bg-slate-200 rounded text-slate-600 dark:text-slate-300" title="Rotate 90°">
+                                        <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                    <button type="button" onclick="deletePage(${globalPageIndex}, event)" class="p-1 hover:bg-rose-100 rounded text-rose-600" title="Delete Page">
+                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                        globalPageIndex++;
+                    }
+                    updateProgress(20 + Math.floor(((f + 1) / files.length) * 60));
                 }
 
+                document.getElementById('pages-count-badge').textContent = `${globalPageIndex} Pages`;
                 document.getElementById('pages-upload-container').classList.add('hidden');
                 document.getElementById('pages-editor-container').classList.remove('hidden');
                 document.getElementById('pdf-action-toolbar').classList.remove('hidden');
@@ -660,8 +666,81 @@
             } catch (err) {
                 console.error(err);
                 hideLoader();
-                alert('Failed to load PDF for editing.');
+                alert('Failed to load PDF(s).');
             }
+        }
+
+        async function appendPdfsToManagement(files) {
+            if (!currentPdfDocLib || !files.length) return;
+            showLoader("Merging PDF(s)...", "Appending pages...");
+            updateProgress(30);
+
+            try {
+                const grid = document.getElementById('thumbnail-grid');
+                let globalPageIndex = grid.children.length;
+
+                for (let f = 0; f < files.length; f++) {
+                    const fileArrayBuffer = await files[f].arrayBuffer();
+                    const donorPdf = await PDFLib.PDFDocument.load(fileArrayBuffer);
+                    const donorIndices = donorPdf.getPageIndices();
+                    const copiedPages = await currentPdfDocLib.copyPages(donorPdf, donorIndices);
+                    copiedPages.forEach(p => currentPdfDocLib.addPage(p));
+
+                    const pdfjsDoc = await pdfjsLib.getDocument({ data: fileArrayBuffer }).promise;
+                    for (let i = 1; i <= pdfjsDoc.numPages; i++) {
+                        pdfPageRotations[globalPageIndex] = 0;
+                        const page = await pdfjsDoc.getPage(i);
+                        const viewport = page.getViewport({ scale: 0.4 });
+                        const canvas = document.createElement('canvas');
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+                        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+
+                        const card = document.createElement('div');
+                        card.className = "relative bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl p-3 flex flex-col items-center group cursor-grab active:cursor-grabbing";
+                        card.dataset.pageIndex = globalPageIndex;
+
+                        card.innerHTML = `
+                            <div class="w-full h-36 flex items-center justify-center overflow-hidden mb-2 rounded bg-white dark:bg-slate-800 shadow-xs">
+                                <img src="${canvas.toDataURL()}" class="max-h-full max-w-full object-contain transition-transform duration-200" id="thumb-img-${globalPageIndex}">
+                            </div>
+                            <div class="w-full flex items-center justify-between text-xs text-slate-500">
+                                <span class="font-bold">Page ${globalPageIndex + 1}</span>
+                                <div class="flex items-center space-x-1">
+                                    <button type="button" onclick="rotatePage(${globalPageIndex}, event)" class="p-1 hover:bg-slate-200 rounded text-slate-600 dark:text-slate-300" title="Rotate 90°">
+                                        <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                    <button type="button" onclick="deletePage(${globalPageIndex}, event)" class="p-1 hover:bg-rose-100 rounded text-rose-600" title="Delete Page">
+                                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                        grid.appendChild(card);
+                        globalPageIndex++;
+                    }
+                }
+
+                document.getElementById('pages-count-badge').textContent = `${globalPageIndex} Pages`;
+                document.getElementById('append-pdf-input').value = '';
+                lucide.createIcons();
+                hideLoader();
+            } catch (err) {
+                console.error(err);
+                hideLoader();
+                alert('Failed to merge additional PDF.');
+            }
+        }
+
+        function resetPagesTool() {
+            currentPdfDocLib = null;
+            pdfPageRotations = {};
+            pagesFileInput.value = '';
+            document.getElementById('append-pdf-input').value = '';
+            document.getElementById('thumbnail-grid').innerHTML = '';
+            document.getElementById('pages-editor-container').classList.add('hidden');
+            document.getElementById('pdf-action-toolbar').classList.add('hidden');
+            document.getElementById('pages-upload-container').classList.remove('hidden');
         }
 
         function rotatePage(pageIdx, event) {
@@ -719,7 +798,7 @@
 
         async function splitPdf() {
             if (!currentPdfDocLib) return;
-            const pageNum = currentPdfDocLib.getPageCount();
+            const pageNum = document.querySelectorAll('#thumbnail-grid > div').length;
             const splitAtStr = prompt(`Enter page number to split after (1 to ${pageNum - 1}):`, Math.floor(pageNum / 2));
             if (!splitAtStr) return;
             const splitAt = parseInt(splitAtStr);
@@ -728,22 +807,22 @@
                 return;
             }
 
-            showLoader("Splitting PDF...", "Generating files into ZIP archive.");
+            showLoader("Splitting PDF...", "Generating ZIP archive.");
             updateProgress(50);
             try {
                 const zip = new JSZip();
-                
+                const gridCards = document.querySelectorAll('#thumbnail-grid > div');
+                const pageIndices = Array.from(gridCards).map(card => parseInt(card.dataset.pageIndex));
+
                 const pdf1 = await PDFLib.PDFDocument.create();
-                const pages1 = await pdf1.copyPages(currentPdfDocLib, Array.from({length: splitAt}, (_, i) => i));
+                const pages1 = await pdf1.copyPages(currentPdfDocLib, pageIndices.slice(0, splitAt));
                 pages1.forEach(p => pdf1.addPage(p));
-                const bytes1 = await pdf1.save();
-                zip.file("part_1.pdf", bytes1);
+                zip.file("part_1.pdf", await pdf1.save());
 
                 const pdf2 = await PDFLib.PDFDocument.create();
-                const pages2 = await pdf2.copyPages(currentPdfDocLib, Array.from({length: pageNum - splitAt}, (_, i) => i + splitAt));
+                const pages2 = await pdf2.copyPages(currentPdfDocLib, pageIndices.slice(splitAt));
                 pages2.forEach(p => pdf2.addPage(p));
-                const bytes2 = await pdf2.save();
-                zip.file("part_2.pdf", bytes2);
+                zip.file("part_2.pdf", await pdf2.save());
 
                 updateProgress(90);
                 const content = await zip.generateAsync({type: "blob"});
@@ -757,7 +836,7 @@
         }
 
 
-        // ================= TAB 3 LOGIC: FORMAT CONVERSIONS =================
+        // ================= TAB 3 LOGIC: CONVERSIONS =================
         const convertDropzone = document.getElementById('convert-dropzone');
         const convertFileInput = document.getElementById('convert-file-input');
 
@@ -782,6 +861,12 @@
             convertDropzone.classList.remove('border-indigo-500');
             if (e.dataTransfer.files.length) convertFileInput.files = e.dataTransfer.files;
         });
+
+        function resetConvertTool() {
+            convertFileInput.value = '';
+            document.getElementById('convert-empty').classList.remove('hidden');
+            document.getElementById('convert-success').classList.add('hidden');
+        }
 
         async function executeConversion() {
             const type = document.getElementById('conversion-type').value;
@@ -826,12 +911,7 @@
                     for (let i = 0; i < files.length; i++) {
                         const file = files[i];
                         const arrayBuffer = await file.arrayBuffer();
-                        let embeddedImg;
-                        if (file.type === 'image/png') {
-                            embeddedImg = await pdfDoc.embedPng(arrayBuffer);
-                        } else {
-                            embeddedImg = await pdfDoc.embedJpg(arrayBuffer);
-                        }
+                        let embeddedImg = file.type === 'image/png' ? await pdfDoc.embedPng(arrayBuffer) : await pdfDoc.embedJpg(arrayBuffer);
                         const page = pdfDoc.addPage([embeddedImg.width, embeddedImg.height]);
                         page.drawImage(embeddedImg, { x: 0, y: 0, width: embeddedImg.width, height: embeddedImg.height });
                         updateProgress(30 + Math.floor((i / files.length) * 50));
@@ -844,7 +924,6 @@
                     const file = files[0];
                     const arrayBuffer = await file.arrayBuffer();
                     const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                    
                     const docxParagraphs = [];
                     for (let i = 1; i <= pdfDoc.numPages; i++) {
                         const page = await pdfDoc.getPage(i);
@@ -853,7 +932,6 @@
                         docxParagraphs.push(new docx.Paragraph({ children: [new docx.TextRun(pageText)] }));
                         updateProgress(30 + Math.floor((i / pdfDoc.numPages) * 50));
                     }
-
                     const doc = new docx.Document({ sections: [{ children: docxParagraphs }] });
                     outputBlob = await docx.Packer.toBlob(doc);
                     outputFilename = 'converted_document.docx';
@@ -862,7 +940,6 @@
                     const file = files[0];
                     const arrayBuffer = await file.arrayBuffer();
                     const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                    
                     const rows = [];
                     for (let i = 1; i <= pdfDoc.numPages; i++) {
                         const page = await pdfDoc.getPage(i);
@@ -871,19 +948,16 @@
                         rows.push([`Page ${i}`, pageText]);
                         updateProgress(30 + Math.floor((i / pdfDoc.numPages) * 50));
                     }
-
                     const ws = XLSX.utils.aoa_to_sheet([["Page", "Extracted Content"], ...rows]);
                     const wb = XLSX.utils.book_new();
                     XLSX.utils.book_append_sheet(wb, ws, "Extracted Data");
-                    const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-                    outputBlob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                    outputBlob = new Blob([XLSX.write(wb, { bookType: 'xlsx', type: 'array' })], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                     outputFilename = 'converted_data.xlsx';
 
                 } else if (type === 'pdf-to-pptx') {
                     const file = files[0];
                     const arrayBuffer = await file.arrayBuffer();
                     const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-                    
                     let pptx = new PptxGenJS();
                     for (let i = 1; i <= pdfDoc.numPages; i++) {
                         const page = await pdfDoc.getPage(i);
@@ -892,10 +966,8 @@
                         canvas.width = viewport.width;
                         canvas.height = viewport.height;
                         await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-
-                        const imgDataUrl = canvas.toDataURL('image/jpeg', 0.85);
                         let slide = pptx.addSlide();
-                        slide.addImage({ data: imgDataUrl, x: 0, y: 0, w: '100%', h: '100%' });
+                        slide.addImage({ data: canvas.toDataURL('image/jpeg', 0.85), x: 0, y: 0, w: '100%', h: '100%' });
                         updateProgress(30 + Math.floor((i / pdfDoc.numPages) * 50));
                     }
                     outputBlob = await pptx.write({ outputType: 'blob' });
@@ -907,11 +979,8 @@
                         logger: m => { if (m.status === 'recognizing text') updateProgress(30 + Math.floor(m.progress * 50)); }
                     });
                     const text = ocrResult.data.text;
-
                     if (type === 'img-to-docx') {
-                        const doc = new docx.Document({
-                            sections: [{ children: [new docx.Paragraph({ children: [new docx.TextRun(text)] })] }]
-                        });
+                        const doc = new docx.Document({ sections: [{ children: [new docx.Paragraph({ children: [new docx.TextRun(text)] })] }] });
                         outputBlob = await docx.Packer.toBlob(doc);
                         outputFilename = 'ocr_document.docx';
                     } else {
@@ -919,16 +988,14 @@
                         const ws = XLSX.utils.aoa_to_sheet([["OCR Extracted Text"], ...lines]);
                         const wb = XLSX.utils.book_new();
                         XLSX.utils.book_append_sheet(wb, ws, "OCR Data");
-                        const excelBuffer = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-                        outputBlob = new Blob([excelBuffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        outputBlob = new Blob([XLSX.write(wb, { bookType: 'xlsx', type: 'array' })], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
                         outputFilename = 'ocr_data.xlsx';
                     }
                 }
 
                 updateProgress(100);
-                const downloadUrl = URL.createObjectURL(outputBlob);
                 const dlBtn = document.getElementById('convert-download-btn');
-                dlBtn.href = downloadUrl;
+                dlBtn.href = URL.createObjectURL(outputBlob);
                 dlBtn.download = outputFilename;
 
                 document.getElementById('convert-empty').classList.add('hidden');
@@ -942,7 +1009,7 @@
         }
 
 
-        // ================= TAB 4 LOGIC: INTERACTIVE FORM FILLER =================
+        // ================= TAB 4 LOGIC: FORMS =================
         let formPdfDocLib = null;
         let formFieldsState = {};
 
@@ -955,9 +1022,7 @@
         formUploadContainer.addEventListener('drop', (e) => {
             e.preventDefault();
             formUploadContainer.classList.remove('border-indigo-500');
-            if (e.dataTransfer.files.length && e.dataTransfer.files[0].type === 'application/pdf') {
-                loadPdfForForms(e.dataTransfer.files[0]);
-            }
+            if (e.dataTransfer.files.length) loadPdfForForms(e.dataTransfer.files[0]);
         });
         formFileInput.addEventListener('change', (e) => {
             if (e.target.files.length) loadPdfForForms(e.target.files[0]);
@@ -969,16 +1034,7 @@
             try {
                 const arrayBuffer = await file.arrayBuffer();
                 formPdfDocLib = await PDFLib.PDFDocument.load(arrayBuffer);
-                
-                let form;
-                try {
-                    form = formPdfDocLib.getForm();
-                } catch (e) {
-                    alert('This PDF does not contain standard interactive form fields.');
-                    hideLoader();
-                    return;
-                }
-
+                const form = formPdfDocLib.getForm();
                 const fields = form.getFields();
                 const fieldsListContainer = document.getElementById('form-fields-list');
                 fieldsListContainer.innerHTML = '';
@@ -990,18 +1046,13 @@
                     fields.forEach(field => {
                         const name = field.getName();
                         formFieldsState[name] = '';
-
                         const wrapper = document.createElement('div');
                         wrapper.className = "bg-slate-50 dark:bg-slate-900/60 p-4 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col space-y-1.5";
                         wrapper.innerHTML = `
                             <label class="text-xs font-bold text-slate-600 dark:text-slate-300">${name} <span class="text-[10px] text-indigo-500 font-normal">(${field.constructor.name})</span></label>
                             <input type="text" data-fieldname="${name}" placeholder="Enter value..." class="w-full bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
                         `;
-                        
-                        const input = wrapper.querySelector('input');
-                        input.addEventListener('input', (e) => {
-                            formFieldsState[name] = e.target.value;
-                        });
+                        wrapper.querySelector('input').addEventListener('input', (e) => { formFieldsState[name] = e.target.value; });
                         fieldsListContainer.appendChild(wrapper);
                     });
                 }
@@ -1009,13 +1060,22 @@
                 document.getElementById('form-upload-container').classList.add('hidden');
                 document.getElementById('form-workspace').classList.remove('hidden');
                 document.getElementById('form-action-toolbar').classList.remove('hidden');
-
                 hideLoader();
             } catch (err) {
                 console.error(err);
                 hideLoader();
-                alert('Failed to load interactive form fields.');
+                alert('This PDF does not contain standard interactive form fields.');
             }
+        }
+
+        function resetFormsTool() {
+            formPdfDocLib = null;
+            formFieldsState = {};
+            formFileInput.value = '';
+            document.getElementById('form-fields-list').innerHTML = '';
+            document.getElementById('form-workspace').classList.add('hidden');
+            document.getElementById('form-action-toolbar').classList.add('hidden');
+            document.getElementById('form-upload-container').classList.remove('hidden');
         }
 
         async function saveFilledPdf(flatten) {
@@ -1027,22 +1087,15 @@
                 for (let [name, val] of Object.entries(formFieldsState)) {
                     try {
                         const field = form.getField(name);
-                        if (field instanceof PDFLib.PDFTextField) {
-                            field.setText(val);
-                        } else if (field instanceof PDFLib.PDFCheckBox && (val.toLowerCase() === 'true' || val === '1' || val.toLowerCase() === 'yes')) {
-                            field.check();
-                        }
+                        if (field instanceof PDFLib.PDFTextField) field.setText(val);
+                        else if (field instanceof PDFLib.PDFCheckBox && (val.toLowerCase() === 'true' || val === '1' || val.toLowerCase() === 'yes')) field.check();
                     } catch (e) { console.warn(e); }
                 }
-
-                if (flatten) {
-                    form.flatten();
-                }
+                if (flatten) form.flatten();
 
                 updateProgress(85);
                 const pdfBytes = await formPdfDocLib.save();
-                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-                downloadBlob(blob, flatten ? 'flattened_form.pdf' : 'filled_form.pdf');
+                downloadBlob(new Blob([pdfBytes], { type: 'application/pdf' }), flatten ? 'flattened_form.pdf' : 'filled_form.pdf');
                 hideLoader();
             } catch (err) {
                 console.error(err);
@@ -1053,9 +1106,7 @@
 
         function formatBytes(bytes, decimals = 2) {
             if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const dm = decimals < 0 ? 0 : decimals;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const k = 1024, dm = decimals < 0 ? 0 : decimals, sizes = ['Bytes', 'KB', 'MB', 'GB'];
             const i = Math.floor(Math.log(bytes) / Math.log(k));
             return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
         }
@@ -1069,13 +1120,6 @@
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
-        }
-
-        try {
-            // Push only for the bottom banner ad unit
-            (adsbygoogle = window.adsbygoogle || []).push({});
-        } catch (e) {
-            console.warn("AdSense push skipped due to local environment sizing constraints.");
         }
     </script>
 </body>
